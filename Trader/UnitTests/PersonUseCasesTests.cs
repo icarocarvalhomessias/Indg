@@ -24,9 +24,9 @@ namespace Trader.Api.UnitTests
         public PersonUseCasesTests()
         {
             _personRepositoryMock = new Mock<IPersonRepository>();
-            _itemServiceMock = new Mock<IItemService>();
+            //_itemServiceMock = new Mock<IItemService>();
 
-            _personService = new PersonService(_personRepositoryMock.Object, _itemServiceMock.Object);
+            _personService = new PersonService(_personRepositoryMock.Object);
         }
 
         [Fact]

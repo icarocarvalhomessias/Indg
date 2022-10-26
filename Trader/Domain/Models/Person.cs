@@ -17,6 +17,8 @@ namespace Trader.Api.Domain.Models
 
         public bool IsActive { get; set; } = true;
 
+        public virtual List<Item> Items { get; set; }
+
 
         public Person()
         {

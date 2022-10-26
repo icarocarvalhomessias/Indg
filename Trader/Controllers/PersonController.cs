@@ -33,9 +33,16 @@ namespace Trader.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Person Person)
+        public async Task<IActionResult> Put(int PersonId, string NewName)
         {
-            await _personService.Update(Person);
+            await _personService.Update(PersonId, NewName);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int PersonId)
+        {
+            await _personService.Delete(PersonId);
             return Ok();
         }
     }

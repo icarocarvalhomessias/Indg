@@ -10,9 +10,12 @@ namespace Trader.Api.Service.Services
     {
         private readonly IItemRepository _itemRepository;
 
-        public ItemService(IItemRepository itemRepository)
+        private readonly IPersonService _personService;
+
+        public ItemService(IItemRepository itemRepository, IPersonService personService)
         {
             _itemRepository = itemRepository;
+            _personService = personService;
         }
 
         public async Task<IEnumerable<Item>> Get()
@@ -29,22 +32,31 @@ namespace Trader.Api.Service.Services
             throw new ApiException("Item not found for given Id", HttpStatusCode.NotFound);
         }
 
-        public async Task Insert(string Name)
+        public async Task Insert(string ItemName, int PersonId)
         {
-            var item = new Item(Name);
-
+            var item = new Item(ItemName, PersonId);
             await IsUnique(item);
+
+            await IsValidPerson(item.PersonId);
 
             await _itemRepository.Insert(item);
 
             await _itemRepository.Save();
         }
 
+        private async Task IsValidPerson(int PersonId)
+        {
+            var person = await _personService.Get(PersonId);
+
+            if(!person.IsActive)
+                throw new ApiException("This person is inactive", HttpStatusCode.Ambiguous);
+        }
+
         private async Task IsUnique(Item Item)
         {
             var existsItem = await _itemRepository.Get(Item.Id);
 
-            if (existsItem != null)
+            if (existsItem != null && Item.Id != existsItem.Id)
                 throw new ApiException("An Item with this Name already exists", HttpStatusCode.Ambiguous);
         }
 
@@ -52,6 +64,16 @@ namespace Trader.Api.Service.Services
         {
             var currentItem = await Get(Item.Id);
             currentItem.Name = Item.Name;
+
+            await IsUnique(currentItem);
+
+            await _itemRepository.Save();
+        }
+
+        public async Task Update(int itenId, string NewItemName)
+        {
+            var currentItem = await Get(itenId);
+            currentItem.Name = NewItemName;
 
             await IsUnique(currentItem);
 

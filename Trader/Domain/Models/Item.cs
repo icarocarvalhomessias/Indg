@@ -18,9 +18,10 @@ namespace Trader.Api.Domain.Models
         }
 
 
-        public Item(string Name)
+        public Item(string Name, int PersonId)
         {
             this.Name = Name;
+            this.PersonId = PersonId;
         }
     }
 }

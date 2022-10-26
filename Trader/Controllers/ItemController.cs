@@ -25,16 +25,16 @@ namespace Trader.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(string Name)
+        public async Task<IActionResult> Post(string ItemName, int PersonId )
         {
-            await _ItemService.Insert(Name);
+            await _ItemService.Insert(ItemName, PersonId);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Item Item)
+        public async Task<IActionResult> Put(int itenId, string NewItemName)
         {
-            await _ItemService.Update(Item);
+            await _ItemService.Update(itenId, NewItemName);
             return Ok();
         }
 

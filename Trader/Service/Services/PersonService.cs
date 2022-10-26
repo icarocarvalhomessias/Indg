@@ -15,12 +15,10 @@ namespace Trader.Api.Service.Services
     public class PersonService : IPersonService
     {
         private IPersonRepository _personRepository { get; set; }
-        private IItemService _itemService { get; set; }
 
-        public PersonService(IPersonRepository personRepository, IItemService itemService)
+        public PersonService(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
-            _itemService = itemService;
         }
 
         public async Task<IEnumerable<Person>> Get()
@@ -56,14 +54,25 @@ namespace Trader.Api.Service.Services
                 throw new ApiException("Already exists a person with this Name", HttpStatusCode.Ambiguous);
         }
 
-        public async Task Update(Person Person)
+        public async Task Update(int PersonId, string NewName)
         {
-            var currentPerson = await Get(Person.Id);
-            currentPerson.Name = Person.Name;
+            var currentPerson = await Get(PersonId);
+            
+            await IsUnique(NewName);
 
-            await IsUnique(currentPerson);
+            currentPerson.Name = NewName;
 
             await _personRepository.Save();
+        }
+
+        private async Task IsUnique(string Name)
+        {
+            var existsPersons = await _personRepository.Get();
+
+            if(existsPersons.Any(x => x.Name == Name))
+            {
+                throw new ApiException("Already exists a person with this Name", HttpStatusCode.Ambiguous);
+            }
         }
 
         public async Task Delete(int Id)
@@ -71,9 +80,20 @@ namespace Trader.Api.Service.Services
             var person = await Get(Id);
             person.IsActive = false;
 
-            await _itemService.InativateItens(Id);
+            await InativateItens(person);
 
             await _personRepository.Save();
+        }
+
+        private async Task InativateItens(Person person)
+        {
+            if (person.Items?.Any() == true)
+            {
+                foreach (var item in person.Items)
+                {
+                    item.IsActive = false;
+                }
+            }
         }
     }
 }

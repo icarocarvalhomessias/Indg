@@ -13,7 +13,7 @@ namespace Trader.Api.Service.Interfaces
         Task<IEnumerable<Person>> Get();
         Task<Person> Get(int id);
         Task Insert(string name);
-        Task Update(Person person);
+        Task Update(int PersonId, string NewName);
         Task Delete(int id);
 
     }
