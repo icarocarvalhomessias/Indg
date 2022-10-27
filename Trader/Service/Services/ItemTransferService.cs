@@ -29,7 +29,7 @@ namespace Trader.Api.Service.Services
 
         public async Task Transfer(ItemTransfer ItemTransfer)
         {
-            await ValidPersonsAtTheTransfer(ItemTransfer);
+            await ValidPersonsToTransfer(ItemTransfer);
             var item = await GetItem(ItemTransfer.ItemId);
 
             item.PersonId = ItemTransfer.ToPersonId;
@@ -50,7 +50,7 @@ namespace Trader.Api.Service.Services
 
         }
 
-        private async Task ValidPersonsAtTheTransfer(ItemTransfer itemTransfer)
+        private async Task ValidPersonsToTransfer(ItemTransfer itemTransfer)
         {
             var FromPerson = await _personService.Get(itemTransfer.FromPersonId);
             var ToPerson = await _personService.Get(itemTransfer.ToPersonId);
