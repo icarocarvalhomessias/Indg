@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using Trader.Api.Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Trader.Api.Service.Interfaces;
 
 namespace Trader.Api.Controllers

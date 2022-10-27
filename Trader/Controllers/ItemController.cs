@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using Trader.Api.Domain.Models;
 using Trader.Api.Service.Interfaces;
 
 namespace Trader.Api.Controllers

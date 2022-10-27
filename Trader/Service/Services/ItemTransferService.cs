@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-using Trader.Api.Domain.Exceptions;
+﻿using Trader.Api.Domain.Exceptions;
 using Trader.Api.Domain.Models;
 using Trader.Api.Repositories.Interfaces;
 using Trader.Api.Service.Interfaces;
@@ -13,13 +11,13 @@ namespace Trader.Api.Service.Services
         private readonly IPersonService _personService;
         private readonly IItemService _itemService;
 
-        public ItemTransferService(IItemTransferRepository itemTransferRepository, 
-            IPersonService personService,
-            IItemService itemService)
+        public ItemTransferService(IItemTransferRepository ItemTransferRepository, 
+            IPersonService PersonService,
+            IItemService ItemService)
         {
-            _itemTransferRepository = itemTransferRepository;
-            _personService = personService;
-            _itemService = itemService;
+            _itemTransferRepository = ItemTransferRepository;
+            _personService = PersonService;
+            _itemService = ItemService;
         }
 
         public async Task<IEnumerable<ItemTransfer>> Get()
@@ -30,7 +28,7 @@ namespace Trader.Api.Service.Services
         public async Task Transfer(ItemTransfer ItemTransfer)
         {
             await ValidPersonsToTransfer(ItemTransfer);
-            var item = await GetItem(ItemTransfer.ItemId);
+            var item = await Get(ItemTransfer.ItemId);
 
             item.PersonId = ItemTransfer.ToPersonId;
             await _itemTransferRepository.Insert(ItemTransfer);
@@ -39,7 +37,7 @@ namespace Trader.Api.Service.Services
         }
 
 
-        private async Task<Item> GetItem(int ItemId)
+        private async Task<Item> Get(int ItemId)
         {
             var item = await _itemService.Get(ItemId);
 
@@ -50,10 +48,10 @@ namespace Trader.Api.Service.Services
 
         }
 
-        private async Task ValidPersonsToTransfer(ItemTransfer itemTransfer)
+        private async Task ValidPersonsToTransfer(ItemTransfer ItemTransfer)
         {
-            var FromPerson = await _personService.Get(itemTransfer.FromPersonId);
-            var ToPerson = await _personService.Get(itemTransfer.ToPersonId);
+            var FromPerson = await _personService.Get(ItemTransfer.FromPersonId);
+            var ToPerson = await _personService.Get(ItemTransfer.ToPersonId);
 
             if (!FromPerson.IsActive)
             {
@@ -64,8 +62,6 @@ namespace Trader.Api.Service.Services
             {
                 throw new ApiException("To Person is inactive", TraderApiError.Person_inactive);
             }
-
-
             // I can use this for a future logs and item history
         }
     }

@@ -1,13 +1,9 @@
 ﻿using Moq;
 using NUnit.Framework;
-using System.Net;
-using System.Xml.Linq;
 using Trader.Api.Domain.Exceptions;
 using Trader.Api.Domain.Models;
 using Trader.Api.Repositories.Interfaces;
-using Trader.Api.Service.Interfaces;
 using Trader.Api.Service.Services;
-
 using Xunit;
 
 namespace Trader.Api.UnitTests
@@ -17,12 +13,10 @@ namespace Trader.Api.UnitTests
     {
         private PersonService _personService;
         private Mock<IPersonRepository> _personRepositoryMock;
-        private Mock<IItemService> _itemServiceMock;
 
         public PersonTests()
         {
             _personRepositoryMock = new Mock<IPersonRepository>();
-            //_itemServiceMock = new Mock<IItemService>();
 
             _personService = new PersonService(_personRepositoryMock.Object);
         }
@@ -67,6 +61,8 @@ namespace Trader.Api.UnitTests
 
         [Xunit.Theory]
         [InlineData(1, "Marcos")]
+        [InlineData(2, "Luis")]
+        [InlineData(2, "Jonas")]
         public async Task ShouldUpdatePerson(int PersonId, string Name)
         {
             _personRepositoryMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Person());

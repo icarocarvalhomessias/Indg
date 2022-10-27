@@ -1,11 +1,8 @@
 ﻿using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using Trader.Api.Domain.Exceptions;
 using Trader.Api.Domain.Models;
 using Trader.Api.Repositories.Interfaces;
-using Trader.Api.Repositories.Repositories;
 using Trader.Api.Service.Interfaces;
 using Trader.Api.Service.Services;
 using Xunit;
@@ -90,10 +87,5 @@ namespace Trader.Api.UnitTests
 
             Assert.AreEqual(TraderApiError.Item_inactive, exception.StatusCode);
         }
-
-        //// Act
-        //var exception = Assert.ThrowsAsync<ApiException>(async () => await _personService.Get(1));
-
-        //Assert.AreEqual(TraderApiError.Person_not_found, exception.StatusCode);
     }
 }

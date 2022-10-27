@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Trader.Api.Domain.Models;
+﻿using Trader.Api.Domain.Models;
 
 namespace Trader.Api.Service.Interfaces
 {

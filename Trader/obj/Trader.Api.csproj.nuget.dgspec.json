@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\icaro\\Documents\\Projetos\\Indg\\Trader\\Trader.Api.csproj": {}
+    "C:\\Projetos\\Indg\\Trader\\Trader.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\icaro\\Documents\\Projetos\\Indg\\Trader\\Trader.Api.csproj": {
+    "C:\\Projetos\\Indg\\Trader\\Trader.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\icaro\\Documents\\Projetos\\Indg\\Trader\\Trader.Api.csproj",
+        "projectUniqueName": "C:\\Projetos\\Indg\\Trader\\Trader.Api.csproj",
         "projectName": "Trader.Api",
-        "projectPath": "C:\\Users\\icaro\\Documents\\Projetos\\Indg\\Trader\\Trader.Api.csproj",
-        "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\icaro\\Documents\\Projetos\\Indg\\Trader\\obj\\",
+        "projectPath": "C:\\Projetos\\Indg\\Trader\\Trader.Api.csproj",
+        "packagesPath": "C:\\Users\\icaro.carvalho\\.nuget\\packages\\",
+        "outputPath": "C:\\Projetos\\Indg\\Trader\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\icaro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\icaro.carvalho\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +27,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://nuget.sisatec.com.br/nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -114,7 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,7 +1,5 @@
 ﻿using Moq;
 using NUnit.Framework;
-using System.Net;
-using System.Xml.Linq;
 using Trader.Api.Domain.Exceptions;
 using Trader.Api.Domain.Models;
 using Trader.Api.Repositories.Interfaces;
@@ -49,7 +47,7 @@ namespace Trader.Api.UnitTests
             _itemRepository.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Item());
 
             // Act
-            var result = await _itemService.Get(1);
+            var result = await _itemService.Get(It.IsAny<int>());
 
             // Assert
             Assert.IsNotNull(result);
@@ -63,7 +61,7 @@ namespace Trader.Api.UnitTests
             _itemRepository.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync((Item)null);
 
             // Act
-            var exception = Assert.ThrowsAsync<ApiException>(async () => await _itemService.Get(1));
+            var exception = Assert.ThrowsAsync<ApiException>(async () => await _itemService.Get(It.IsAny<int>()));
 
             Assert.AreEqual(TraderApiError.Item_not_found, exception.StatusCode);
 
@@ -73,7 +71,7 @@ namespace Trader.Api.UnitTests
         public async Task ShouldInserItem()
         {
             var name = "Icaro";
-            var personId = 1;
+            var personId = It.IsAny<int>();
 
             _itemRepository.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Item());
             _personService.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Person());
@@ -91,7 +89,7 @@ namespace Trader.Api.UnitTests
         public async Task ShouldNotInserItemInactivePerson()
         {
             var name = "Icaro";
-            var personId = 1;
+            var personId = It.IsAny<int>();
             var person = new Person();
             person.IsActive = false;
 
@@ -129,7 +127,6 @@ namespace Trader.Api.UnitTests
 
             Assert.AreEqual(TraderApiError.change_Owner_with_item_different_name, exception.StatusCode);
 
-
             _itemRepository.Verify(r => r.Save(), Times.Never);
 
         }
@@ -140,7 +137,7 @@ namespace Trader.Api.UnitTests
             _itemRepository.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Item());
             _itemRepository.Setup(r => r.Get()).ReturnsAsync(new List<Item>());
 
-            await _itemService.Update(1 , "teste");
+            await _itemService.Update(It.IsAny<int>(), "teste");
 
             _itemRepository.Verify(r => r.Save(), Times.Once);
 
@@ -165,7 +162,7 @@ namespace Trader.Api.UnitTests
         {
             _itemRepository.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Item());
 
-            await _itemService.Delete(1);
+            await _itemService.Delete(It.IsAny<int>());
 
             _itemRepository.Verify(r => r.Save(), Times.Once);
         }
@@ -182,7 +179,7 @@ namespace Trader.Api.UnitTests
 
             _itemRepository.Setup(r => r.GetByPersonId(It.IsAny<int>())).ReturnsAsync(items);
 
-            await _itemService.InativateItens(1);
+            await _itemService.InativateItens(It.IsAny<int>());
 
             Assert.IsTrue(items.All(i => !i.IsActive));
             _itemRepository.Verify(r => r.Save(), Times.Once);

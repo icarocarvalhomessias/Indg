@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Trader.Api.Domain.Exceptions;
+﻿using Trader.Api.Domain.Exceptions;
 using Trader.Api.Domain.Models;
 using Trader.Api.Repositories.Interfaces;
 using Trader.Api.Service.Interfaces;
@@ -12,10 +11,10 @@ namespace Trader.Api.Service.Services
 
         private readonly IPersonService _personService;
 
-        public ItemService(IItemRepository itemRepository, IPersonService personService)
+        public ItemService(IItemRepository ItemRepository, IPersonService PersonService)
         {
-            _itemRepository = itemRepository;
-            _personService = personService;
+            _itemRepository = ItemRepository;
+            _personService = PersonService;
         }
 
         public async Task<IEnumerable<Item>> Get()
@@ -71,9 +70,9 @@ namespace Trader.Api.Service.Services
             await _itemRepository.Save();
         }
 
-        public async Task Update(int itenId, string NewItemName)
+        public async Task Update(int ItenId, string NewItemName)
         {
-            var currentItem = await Get(itenId);
+            var currentItem = await Get(ItenId);
             currentItem.Name = NewItemName;
 
             await IsUnique(NewItemName);

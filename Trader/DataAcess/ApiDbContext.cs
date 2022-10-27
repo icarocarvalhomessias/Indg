@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using Trader.Api.Domain.Models;
 
 namespace Trader.Api.DataAcess
