@@ -29,13 +29,13 @@ namespace Trader.Api.Service.Services
             if (item != null)
                 return item;
 
-            throw new ApiException("Item not found for given Id", HttpStatusCode.NotFound);
+            throw new ApiException("Item not found for given Id", TraderApiError.Item_not_found);
         }
 
         public async Task Insert(string ItemName, int PersonId)
         {
             var item = new Item(ItemName, PersonId);
-            await IsUnique(item);
+            await IsUnique(ItemName);
 
             await IsValidPerson(item.PersonId);
 
@@ -49,23 +49,24 @@ namespace Trader.Api.Service.Services
             var person = await _personService.Get(PersonId);
 
             if(!person.IsActive)
-                throw new ApiException("This person is inactive", HttpStatusCode.Ambiguous);
+                throw new ApiException("This person is inactive", TraderApiError.Person_inactive);
         }
 
-        private async Task IsUnique(Item Item)
+        private async Task IsUnique(string Name)
         {
-            var existsItem = await _itemRepository.Get(Item.Id);
+            var existsItems = await _itemRepository.Get();
 
-            if (existsItem != null && Item.Id != existsItem.Id)
-                throw new ApiException("An Item with this Name already exists", HttpStatusCode.Ambiguous);
+            if (existsItems?.Any(x => x.Name == Name) == true)
+                throw new ApiException("An Item with this Name already exists", TraderApiError.Item_name_not_Unique);
         }
 
-        public async Task Update(Item Item)
+        public async Task ChangeOwner(Item Item)
         {
             var currentItem = await Get(Item.Id);
-            currentItem.Name = Item.Name;
 
-            await IsUnique(currentItem);
+            if(currentItem.Name != Item.Name)
+                throw new ApiException("To change Owner the name cannot be changed", TraderApiError.change_Owner_with_item_different_name);
+
 
             await _itemRepository.Save();
         }
@@ -75,7 +76,7 @@ namespace Trader.Api.Service.Services
             var currentItem = await Get(itenId);
             currentItem.Name = NewItemName;
 
-            await IsUnique(currentItem);
+            await IsUnique(NewItemName);
 
             await _itemRepository.Save();
         }

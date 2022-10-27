@@ -6,9 +6,7 @@ namespace Trader.Api.Middleware
 {
     public class GlobalExceptionHandlingMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
         //private readonly ILogger _logger;
-      
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate Next)
         {

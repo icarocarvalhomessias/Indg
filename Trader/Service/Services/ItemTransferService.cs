@@ -35,7 +35,7 @@ namespace Trader.Api.Service.Services
             item.PersonId = ItemTransfer.ToPersonId;
             await _itemTransferRepository.Insert(ItemTransfer);
 
-            await _itemService.Update(item);
+            await _itemService.ChangeOwner(item);
         }
 
 
@@ -46,7 +46,7 @@ namespace Trader.Api.Service.Services
             if (item?.IsActive == true)
                 return item;
 
-            throw new ApiException("Item inactive", HttpStatusCode.NotFound);
+            throw new ApiException("Item inactive", TraderApiError.Item_inactive);
 
         }
 
@@ -57,12 +57,12 @@ namespace Trader.Api.Service.Services
 
             if (!FromPerson.IsActive)
             {
-                throw new ApiException("From Person is inactive", HttpStatusCode.NotFound);
+                throw new ApiException("From Person is inactive", TraderApiError.Person_inactive);
             }
 
             if (!ToPerson.IsActive)
             {
-                throw new ApiException("To Person is inactive", HttpStatusCode.NotFound);
+                throw new ApiException("To Person is inactive", TraderApiError.Person_inactive);
             }
 
 

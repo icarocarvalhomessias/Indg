@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 using Trader.Api.Domain.Exceptions;
 using Trader.Api.Domain.Models;
@@ -32,7 +27,7 @@ namespace Trader.Api.Service.Services
             if (person != null)
                 return person;
 
-            throw new ApiException("Person not fouond for the given Id", HttpStatusCode.NotFound);
+            throw new ApiException("Person not fouond for the given Id", TraderApiError.Person_not_found);
         }
 
         public async Task Insert(string Name)
@@ -51,7 +46,7 @@ namespace Trader.Api.Service.Services
             var existPerson = await _personRepository.Get(Person.Id);
 
             if (existPerson != null)
-                throw new ApiException("Already exists a person with this Name", HttpStatusCode.Ambiguous);
+                throw new ApiException("Already exists a person with this Name", TraderApiError.Person_name_not_unique);
         }
 
         public async Task Update(int PersonId, string NewName)
@@ -71,7 +66,7 @@ namespace Trader.Api.Service.Services
 
             if(existsPersons.Any(x => x.Name == Name))
             {
-                throw new ApiException("Already exists a person with this Name", HttpStatusCode.Ambiguous);
+                throw new ApiException("Already exists a person with this Name", TraderApiError.Person_name_not_unique);
             }
         }
 
