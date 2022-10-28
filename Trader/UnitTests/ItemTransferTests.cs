@@ -42,13 +42,14 @@ namespace Trader.Api.UnitTests
         [Fact]
         public async Task ShouldTransferItem()
         {
+            var anyInt = It.IsAny<int>();
             // Arrange
             _itemTransferRepositoryMock.Setup(r => r.Get()).ReturnsAsync(new List<ItemTransfer>());
             _personServiceMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Person());
             _itemServiceMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Item());
 
             // Act
-            await _itemTransferService.Transfer( new ItemTransfer());
+            await _itemTransferService.Transfer(anyInt, anyInt, anyInt);
 
             // Assert
             _itemTransferRepositoryMock.Verify(r => r.Insert(It.IsAny<ItemTransfer>()), Times.Once);
@@ -58,6 +59,8 @@ namespace Trader.Api.UnitTests
         [Fact]
         public async Task ShouldNotTransferItemPersonInactive()
         {
+            var anyInt = It.IsAny<int>();
+
             var person = new Person();
             person.IsActive = false;
 
@@ -66,7 +69,7 @@ namespace Trader.Api.UnitTests
             _personServiceMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(person);
             _itemServiceMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Item());
 
-            var exception = Assert.ThrowsAsync<ApiException>(async () => await _itemTransferService.Transfer(new ItemTransfer()));
+            var exception = Assert.ThrowsAsync<ApiException>(async () => await _itemTransferService.Transfer(anyInt, anyInt, anyInt));
 
             Assert.AreEqual(TraderApiError.Person_inactive, exception.StatusCode);
         }
@@ -75,6 +78,8 @@ namespace Trader.Api.UnitTests
         [Fact]
         public async Task ShouldNotTransferItemItemInactive()
         {
+            var anyInt = It.IsAny<int>();
+
             var item = new Item();
             item.IsActive = false;
 
@@ -83,7 +88,7 @@ namespace Trader.Api.UnitTests
             _personServiceMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(new Person());
             _itemServiceMock.Setup(r => r.Get(It.IsAny<int>())).ReturnsAsync(item);
 
-            var exception = Assert.ThrowsAsync<ApiException>(async () => await _itemTransferService.Transfer(new ItemTransfer()));
+            var exception = Assert.ThrowsAsync<ApiException>(async () => await _itemTransferService.Transfer(anyInt, anyInt, anyInt));
 
             Assert.AreEqual(TraderApiError.Item_inactive, exception.StatusCode);
         }

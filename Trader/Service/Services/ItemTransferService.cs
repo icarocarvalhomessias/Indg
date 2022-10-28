@@ -25,8 +25,13 @@ namespace Trader.Api.Service.Services
             return await _itemTransferRepository.Get();
         }
 
-        public async Task Transfer(ItemTransfer ItemTransfer)
+        public async Task Transfer(int FromPersonId, int ToPersonId, int ItemId)
         {
+            var ItemTransfer = new ItemTransfer();
+            ItemTransfer.FromPersonId = FromPersonId;
+            ItemTransfer.ToPersonId = ToPersonId;
+            ItemTransfer.ItemId = ItemId;
+
             await ValidPersonsToTransfer(ItemTransfer);
             var item = await Get(ItemTransfer.ItemId);
 

@@ -24,9 +24,10 @@ namespace Trader.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(ItemTransfer itemTransfer)
+        public async Task<IActionResult> Post(int FromPersonId, int ToPersonId, int ItemId)
         {
-            await _itemTransferService.Transfer(itemTransfer);
+       
+            await _itemTransferService.Transfer(FromPersonId, ToPersonId, ItemId);
             return Ok();
         }
     }

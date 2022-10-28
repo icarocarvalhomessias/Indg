@@ -6,6 +6,6 @@ namespace Trader.Api.Service.Interfaces
     {
         Task<IEnumerable<ItemTransfer>> Get();
 
-        Task Transfer(ItemTransfer itemTransfer);
+        Task Transfer(int FromPersonId, int ToPersonId, int ItemId);
     }
 }
