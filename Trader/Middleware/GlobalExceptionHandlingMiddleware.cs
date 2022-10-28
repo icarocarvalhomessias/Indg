@@ -25,15 +25,15 @@ namespace Trader.Api.Middleware
                     Status = (int)HttpStatusCode.InternalServerError,
                     Type = "Server error",
                     Title = "Server error",
-                    Detail = "An internal server error has ocurred"
-                    //Detail  = ex.Message
+                    //Detail = "An internal server error has ocurred"
+                    Detail  = ex.Message
                 };
 
                 var json = JsonSerializer.Serialize(problem);
+                context.Response.ContentType = "application/json";
 
                 await context.Response.WriteAsync(json);
 
-                context.Response.ContentType = "application/json";
             }
         }
     }
