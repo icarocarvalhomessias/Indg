@@ -35,6 +35,10 @@ namespace Trader.Api.Service.Services
             await ValidPersonsToTransfer(ItemTransfer);
             var item = await Get(ItemTransfer.ItemId);
 
+            if(item.PersonId != ItemTransfer.FromPersonId)
+                throw new ApiException("From Person is not the same of the item", TraderApiError.Person_is_not_the_same_of_item);
+
+
             item.PersonId = ItemTransfer.ToPersonId;
             await _itemTransferRepository.Insert(ItemTransfer);
 
